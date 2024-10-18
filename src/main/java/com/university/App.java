@@ -1,113 +1,93 @@
 package com.university;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
-// CLASE COURSE
-class Course {
-    private String courseName;
-
-    public Course(String courseName) {
-        this.courseName = courseName;
-    }
-
-    public String getCourseName() {
-        return courseName;
-    }
-}
-
-// CLASE ESTUDIANTE
 class Student {
-    private String name;
-    private String email;
-    private ArrayList<Course> courseList;
+    private String Name;
+    private Integer Course_Count;
+    private Set<String> Courses = new HashSet<>();
 
-    public Student(String name, String email) {
-        this.name = name;
-        this.email = email;
-        this.courseList = new ArrayList<>();
+    public Student(String Name, Integer Course_Count) {
+        this.Name = Name;
+        this.Course_Count = Course_Count;
+        this.Courses = new HashSet<>();
     }
 
-    public String getName() {
-        return name;
+    public String Get_Name() {
+        return Name;
     }
 
-    public String getEmail() {
-        return email;
+    public Integer Get_Course_Count() {
+        return Course_Count;
     }
 
-    public ArrayList<Course> getCourseList() {
-        return courseList;
+    public void increment_Course_Count() {
+        Course_Count++;
     }
 
-    public void addCourse(Course course) {
-        this.courseList.add(course);
+    public boolean has_Already_Course(String Course_Name) {
+        return Courses.contains(Course_Name);
+    }
+
+    public void Add_Course(String Course_Name) {
+        Courses.add(Course_Name);
     }
 }
 
-// MI CLASE PRINCIPAL APP
 public class App {
     public static void main(String[] args) {
-        String inputPath = "src/main/resources/input.csv";
-        ArrayList<ArrayList<String>> dataList = new ArrayList<>();
-        HashMap<String, Student> studentMap = new HashMap<>();
+        String Input_CSV = "src/main/resources/input.csv";
+        String Output_CSV = "src/main/resources/student.csv";
+        TreeMap<String, Student> studentMap = new TreeMap<>();
+        Set<String> courseSet = new HashSet<>();
 
-        // LEE EL ARCHIVO CSV DE ENTRADA
-        try (BufferedReader inputReader = new BufferedReader(new FileReader(inputPath))) {
-            String inputLine;
+        try (BufferedReader br = new BufferedReader(new FileReader(Input_CSV))) {
+            String line;
 
-            while ((inputLine = inputReader.readLine()) != null) {
-                ArrayList<String> lineList = new ArrayList<>();
-                String currentWord = "";
+            boolean isFirstLine = true;
+            while ((line = br.readLine()) != null) {
+                if (isFirstLine) {
+                    isFirstLine = false;
+                    continue;
+                }
 
-                for (char i : inputLine.toCharArray()) {
-                    if (i != ',') {
-                        currentWord += i;
-                    } else {
-                        lineList.add(currentWord.strip());
-                        currentWord = "";
+                String[] data = line.split(",");
+                String studentName = data[2];
+                String courseName = data[1];
+
+                Student student;
+                    if (studentMap.containsKey(studentName)) {
+                        student = studentMap.get(studentName);
+                        if (!student.has_Already_Course(courseName)) {
+                            student.Add_Course(courseName);
+                            student.increment_Course_Count();
+                        }
+                    }
+                    else {
+                        student = new Student(studentName, 0);
+                        student.increment_Course_Count();
+                        studentMap.put(studentName, student);
+                        student.Add_Course(courseName);
                     }
                 }
-                lineList.add(currentWord.strip()); // AGREGA EL VALOR DE LA ULTIMA COMA
-                dataList.add(lineList);
+
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(Output_CSV))) {
+                bw.write("Student_Name, Course_Count");
+                bw.newLine();
+
+                for (Map.Entry<String, Student> entry : studentMap.entrySet()) {
+                    String studentName = entry.getKey();
+                    Integer courseCount = entry.getValue().Get_Course_Count();
+                    bw.write(studentName + "," + courseCount);
+                    bw.newLine();
+                }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        // SACAR ENCABEZADO
-        dataList.remove(0);
-
-        // CREAR MAPAS DE ESTUDIANTES
-        for (ArrayList<String> studentData : dataList) {
-            String studentName = studentData.get(0);
-            String courseName = studentData.get(1);
-            String studentEmail = studentData.get(2);
-
-            // SI EL ESTUDIANTE NO ESTÁ, AGREGARLO
-            studentMap.putIfAbsent(studentEmail, new Student(studentName, studentEmail));
-
-            // AGREGAR CURSO DEL ESTUDIANTE
-            Course course = new Course(courseName);
-            studentMap.get(studentEmail).addCourse(course);
-        }
-
-        // CSV DE SALIDA
-        try {
-            File solutionFile = new File("src/main/resources/solution.csv");
-            FileWriter solutionWriter = new FileWriter(solutionFile);
-
-            solutionWriter.write("Student_Name,Course_Count\n");
-            for (Student student : studentMap.values()) {
-                int courseCount = student.getCourseList().size();
-                solutionWriter.write(student.getName() + "," + courseCount + "\n");
-            }
-            solutionWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
