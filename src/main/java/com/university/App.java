@@ -3,7 +3,7 @@ package com.university;
 import java.io.*;
 import java.util.*;
 
-class Student { // Manage the data of students
+class Student {
     private String Name;
     private Integer Course_Count;
     private Set<String> Courses = new HashSet<>();
@@ -39,14 +39,16 @@ class Student { // Manage the data of students
     }
 }
 
-class Evaluation { // Manage the evaluation data
+class Evaluation {
     private String Subject_Name;
     private String Evaluation_Name;
     private Map<String, Double> studentGrades;
+    private String exerciseName;
 
-    public Evaluation(String subjectName, String evaluationName) {
+    public Evaluation(String subjectName, String evaluationName, String exerciseName) {
         this.Subject_Name = subjectName;
         this.Evaluation_Name = evaluationName;
+        this.exerciseName = exerciseName;
         this.studentGrades = new HashMap<>();
     }
 
@@ -58,16 +60,28 @@ class Evaluation { // Manage the evaluation data
         return Evaluation_Name;
     }
 
-    public void Add_Grade(String studentName, double grade) {
-        studentGrades.put(studentName, grade);
+    public void Add_Grade(String exerciseName, double grade) {
+        studentGrades.put(exerciseName, grade);
     }
 
     public Map<String, Double> Get_Grades() {
         return studentGrades;
     }
+
+    public String Get_ExerciseName() {
+        return exerciseName;
+    }
+
+    public double calculateFinalGrade() {
+        double sum = 0.0;
+        for (Double grade : studentGrades.values()) {
+            sum += grade;
+        }
+        return sum / studentGrades.size();
+    }
 }
 
-class StudentManager { // Add the students to the TreeMap
+class StudentManager {
     private TreeMap<String, Student> studentMap = new TreeMap<>();
     private TreeMap<String, Evaluation> evaluations = new TreeMap<>();
 
@@ -86,10 +100,12 @@ class StudentManager { // Add the students to the TreeMap
         }
     }
 
-    public void addEvaluation(String subjectName, String evaluationName, String studentName, double grade) {
+    public void addEvaluation(String subjectName, String evaluationName, String studentName, String exerciseName, double grade) {
         String key = subjectName + "-" + evaluationName + "-" + studentName;
-        evaluations.putIfAbsent(key, new Evaluation(subjectName, evaluationName));
-        evaluations.get(key).Add_Grade(studentName, grade);
+        Evaluation evaluationInstance = evaluations.getOrDefault(key, new Evaluation(subjectName, evaluationName, exerciseName));
+        evaluations.putIfAbsent(key, evaluationInstance);
+
+        evaluationInstance.Add_Grade(exerciseName, grade);
     }
 
     public TreeMap<String, Student> getStudentMap() {
@@ -101,7 +117,7 @@ class StudentManager { // Add the students to the TreeMap
     }
 }
 
-class FileHandler { // Manage the CSV
+class FileHandler {
     public List<String[]> readCSV(String filePath) throws IOException {
         List<String[]> data = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -133,22 +149,19 @@ class FileHandler { // Manage the CSV
 
     public void writeEvaluationCSV(String filePath, Map<String, Evaluation> evaluationMap) throws IOException {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
-            bw.write("Subject_Name,Evaluation_Name,Student_Name,Grade");
+            bw.write("Subject_Name,Evaluation_Name,Student_Name,Final_Grade");
             bw.newLine();
-            for (Evaluation evaluation : evaluationMap.values()) {
-                Map<String, Double> studentGrades = evaluation.Get_Grades();
-                for (Map.Entry<String, Double> entry : studentGrades.entrySet()) {
-                    String studentName = entry.getKey();
-                    Double grade = entry.getValue();
-                    bw.write(evaluation.Get_Subject_Name() + "," + evaluation.Get_Evaluation_Name() + "," + studentName + "," + grade);
-                    bw.newLine();
-                }
+            for (Map.Entry<String, Evaluation> entry : evaluationMap.entrySet()) {
+                Evaluation evaluation = entry.getValue();
+                double finalGrade = evaluation.calculateFinalGrade();
+                bw.write(evaluation.Get_Subject_Name() + "," + evaluation.Get_Evaluation_Name() + "," + entry.getKey().split("-")[2] + "," + String.format("%.1f", finalGrade));
+                bw.newLine();
             }
         }
     }
 }
 
-public class App { // Execute the app
+public class App {
     public static void main(String[] args) {
         String Input_CSV = "src/main/resources/input.csv";
         String Input_2CSV = "src/main/resources/input_2.csv";
@@ -171,8 +184,9 @@ public class App { // Execute the app
                 String studentName = entry[0];
                 String subjectName = entry[1];
                 String evaluationName = entry[3];
+                String exerciseName = entry[4];
                 double grade = Double.parseDouble(entry[5]);
-                studentManager.addEvaluation(subjectName, evaluationName, studentName, grade);
+                studentManager.addEvaluation(subjectName, evaluationName, studentName, exerciseName, grade);
             }
             fileHandler.writeCSV(Output_CSV, studentManager.getStudentMap());
             fileHandler.writeEvaluationCSV(Output_Evaluation_CSV, studentManager.getEvaluations());
