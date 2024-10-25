@@ -44,12 +44,14 @@ class Evaluation {
     private String Evaluation_Name;
     private Map<String, Double> studentGrades;
     private String exerciseName;
+    private String evaluationType;
 
-    public Evaluation(String subjectName, String evaluationName, String exerciseName) {
+    public Evaluation(String subjectName, String evaluationName, String exerciseName, String evaluationType) {
         this.Subject_Name = subjectName;
         this.Evaluation_Name = evaluationName;
         this.exerciseName = exerciseName;
         this.studentGrades = new HashMap<>();
+        this.evaluationType = evaluationType;
     }
 
     public String Get_Subject_Name() {
@@ -70,6 +72,10 @@ class Evaluation {
 
     public String Get_ExerciseName() {
         return exerciseName;
+    }
+
+    public String Get_Evaluation_Type() {
+        return evaluationType;
     }
 
     public double calculateFinalGrade() {
@@ -100,11 +106,10 @@ class StudentManager {
         }
     }
 
-    public void addEvaluation(String subjectName, String evaluationName, String studentName, String exerciseName, double grade) {
-        String key = subjectName + "-" + evaluationName + "-" + studentName;
-        Evaluation evaluationInstance = evaluations.getOrDefault(key, new Evaluation(subjectName, evaluationName, exerciseName));
+    public void addEvaluation(String subjectName, String evaluationName, String studentName, String exerciseName, double grade, String evaluationType) {
+        String key = subjectName + "-" + evaluationName + "-" + studentName + "-" + evaluationType;
+        Evaluation evaluationInstance = evaluations.getOrDefault(key, new Evaluation(subjectName, evaluationName, exerciseName, evaluationType));
         evaluations.putIfAbsent(key, evaluationInstance);
-
         evaluationInstance.Add_Grade(exerciseName, grade);
     }
 
@@ -183,10 +188,11 @@ public class App {
             for (String[] entry : data2) {
                 String studentName = entry[0];
                 String subjectName = entry[1];
+                String evaluationType = entry[2];
                 String evaluationName = entry[3];
                 String exerciseName = entry[4];
                 double grade = Double.parseDouble(entry[5]);
-                studentManager.addEvaluation(subjectName, evaluationName, studentName, exerciseName, grade);
+                studentManager.addEvaluation(subjectName, evaluationName, studentName, exerciseName, grade, evaluationType);
             }
             fileHandler.writeCSV(Output_CSV, studentManager.getStudentMap());
             fileHandler.writeEvaluationCSV(Output_Evaluation_CSV, studentManager.getEvaluations());
