@@ -1,6 +1,5 @@
 package com.university;
 
-
 import org.junit.jupiter.api.Test;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -14,41 +13,47 @@ public class SolutionTest {
 
     @Test
     public void testSolutionCSVMatchesExpected() {
-        String solutionFilePath = "src/main/resources/solution.csv";
+        String studentFilePath = "src/main/resources/student.csv";
         String expectedFilePath = "src/main/resources/expected.csv";
 
-        // Check if solution.csv exists before running the test
-        if (Files.exists(Paths.get(solutionFilePath))) {
-            fail("The solution.csv file exists before the test runs.");
+        try {
+            Files.deleteIfExists(Paths.get(studentFilePath));
+        } catch (IOException e) {
+            e.printStackTrace();
+            fail("Failed to delete pre-existing student.csv file.");
         }
 
         try {
-            App.main(new String[]{});  // Running the App's main method
+            App.main(new String[]{});
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("Failed to execute App.main()");
+            fail("Failed to execute App.main() with exception: " + e.getMessage());
         }
 
-        // Check if solution.csv was created after running the test
-        if (!Files.exists(Paths.get(solutionFilePath))) {
-            fail("The solution.csv file does not exist after running the test.");
+        if (!Files.exists(Paths.get(studentFilePath))) {
+            fail("The student.csv file does not exist after running the test.");
         }
 
-        // Proceed to compare the solution.csv with expected.csv
-        try (BufferedReader solutionReader = new BufferedReader(new FileReader(solutionFilePath));
+        try (BufferedReader studentReader = new BufferedReader(new FileReader(studentFilePath));
              BufferedReader expectedReader = new BufferedReader(new FileReader(expectedFilePath))) {
-            String solutionLine;
+            String studentLine;
             String expectedLine;
-            while ((solutionLine = solutionReader.readLine()) != null &&
+            while ((studentLine = studentReader.readLine()) != null &&
                     (expectedLine = expectedReader.readLine()) != null) {
-                assertEquals(expectedLine, solutionLine, "Mismatch found in the CSV file content.");
+                assertEquals(expectedLine, studentLine, "Mismatch found in the CSV file content.");
             }
 
-            // Ensure both files have the same number of lines
-            assertEquals(solutionReader.readLine(), expectedReader.readLine(), "Files have different number of lines.");
+            assertEquals(studentReader.readLine(), expectedReader.readLine(), "Files have different number of lines.");
         } catch (IOException e) {
             e.printStackTrace();
+            fail("IOException occurred while reading the CSV files: " + e.getMessage());
+        }
+
+        try {
+            Files.deleteIfExists(Paths.get(studentFilePath));
+        } catch (IOException e) {
+            e.printStackTrace();
+            fail("Failed to delete student.csv after the test.");
         }
     }
 }
-
