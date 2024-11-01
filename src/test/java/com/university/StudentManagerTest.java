@@ -2,6 +2,7 @@ package com.university;
 
 import com.university.Generators.Evaluation;
 import com.university.Generators.Student;
+import com.university.Managers.EvaluationManager;
 import com.university.Managers.StudentManager;
 import org.junit.jupiter.api.Test;
 import java.util.Map;
@@ -41,7 +42,7 @@ public class StudentManagerTest {
 
     @Test
     public void testAddEvaluation() {
-        StudentManager manager = new StudentManager();
+        EvaluationManager manager = new EvaluationManager();
         manager.addEvaluation("Mathematics", "Exam 1", "Alice", "Exercise 1", 8.0, "Test");
 
         Map<String, Evaluation> evaluations = manager.getEvaluations();
@@ -58,7 +59,7 @@ public class StudentManagerTest {
 
     @Test
     public void testAddGradeToExistingEvaluation() {
-        StudentManager manager = new StudentManager();
+        EvaluationManager manager = new EvaluationManager();
         manager.addEvaluation("Physics", "Final", "Bob", "Problem 1", 9.0, "Exam");
         manager.addEvaluation("Physics", "Final", "Bob", "Problem 2", 7.5, "Exam");
 

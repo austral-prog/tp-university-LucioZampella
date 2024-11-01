@@ -8,7 +8,6 @@ import java.util.TreeMap;
 
 public class StudentManager {
     private TreeMap<String, Student> studentMap = new TreeMap<>();
-    private TreeMap<String, Evaluation> evaluations = new TreeMap<>();
 
     public void addStudent(String studentName, String courseName) {
         Student student;
@@ -25,18 +24,7 @@ public class StudentManager {
         }
     }
 
-    public void addEvaluation(String subjectName, String evaluationName, String studentName, String exerciseName, double grade, String evaluationType) {
-        String key = subjectName + "-" + evaluationName + "-" + studentName + "-" + evaluationType;
-        Evaluation evaluationInstance = evaluations.getOrDefault(key, new Evaluation(subjectName, evaluationName, exerciseName, evaluationType));
-        evaluations.putIfAbsent(key, evaluationInstance);
-        evaluationInstance.Add_Grade(exerciseName, grade);
-    }
-
     public TreeMap<String, Student> getStudentMap() {
         return studentMap;
-    }
-
-    public Map<String, Evaluation> getEvaluations() {
-        return evaluations;
     }
 }

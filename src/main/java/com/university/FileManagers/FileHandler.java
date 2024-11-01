@@ -1,5 +1,6 @@
 package com.university.FileManagers;
 
+import com.university.Generators.Criteria;
 import com.university.Generators.Evaluation;
 import com.university.Generators.Student;
 
@@ -47,6 +48,19 @@ public class FileHandler {
                 Evaluation evaluation = entry.getValue();
                 double finalGrade = evaluation.calculateFinalGrade();
                 bw.write(evaluation.Get_Subject_Name() + "," + evaluation.Get_Evaluation_Name() + "," + entry.getKey().split("-")[2] + "," + String.format("%.1f", finalGrade));
+                bw.newLine();
+            }
+        }
+    }
+
+    public void writeCriteriaCSV(String filePath, TreeMap<String, Criteria> criteriaMap) throws IOException {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
+            bw.write("Subject_Name,Evaluation_Name,Criteria_Type,Criteria_Value");
+            bw.newLine();
+            for (Map.Entry<String, Criteria> entry : criteriaMap.entrySet()) {
+                String subjectName = entry.getKey();
+                Criteria criteria = entry.getValue();
+                bw.write(subjectName);
                 bw.newLine();
             }
         }
