@@ -1,4 +1,4 @@
-package com.university.Generators;
+package com.university.generators;
 
 public class Criteria {
     private String CriteriaType;

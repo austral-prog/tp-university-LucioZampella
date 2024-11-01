@@ -1,9 +1,7 @@
-package com.university.Managers;
+package com.university.managers;
 
-import com.university.Generators.Evaluation;
-import com.university.Generators.Student;
+import com.university.generators.Student;
 
-import java.util.Map;
 import java.util.TreeMap;
 
 public class StudentManager {

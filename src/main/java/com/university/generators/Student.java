@@ -1,4 +1,4 @@
-package com.university.Generators;
+package com.university.generators;
 
 import java.util.HashSet;
 import java.util.Set;

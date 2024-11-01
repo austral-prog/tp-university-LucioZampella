@@ -1,9 +1,9 @@
 package com.university;
 
-import com.university.Generators.Evaluation;
-import com.university.Generators.Student;
-import com.university.Managers.EvaluationManager;
-import com.university.Managers.StudentManager;
+import com.university.generators.Evaluation;
+import com.university.generators.Student;
+import com.university.managers.EvaluationManager;
+import com.university.managers.StudentManager;
 import org.junit.jupiter.api.Test;
 import java.util.Map;
 import java.util.TreeMap;

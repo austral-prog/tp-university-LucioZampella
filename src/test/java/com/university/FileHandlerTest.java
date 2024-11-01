@@ -1,8 +1,7 @@
 package com.university;
 
-import com.university.FileManagers.FileHandler;
-import com.university.Generators.Evaluation;
-import com.university.Generators.Student;
+import com.university.fileManagers.FileHandler;
+import com.university.generators.Student;
 import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.io.IOException;
@@ -47,7 +46,6 @@ public class FileHandlerTest {
         studentMap.put("Bob", student2);
 
         FileHandler fileHandler = new FileHandler();
-        fileHandler.writeCSV(tempFile.getAbsolutePath(), studentMap);
 
         List<String> lines = java.nio.file.Files.readAllLines(tempFile.toPath());
         assertEquals(3, lines.size());

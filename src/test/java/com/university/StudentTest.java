@@ -1,6 +1,6 @@
 package com.university;
 
-import com.university.Generators.Student;
+import com.university.generators.Student;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -1,6 +1,6 @@
-package com.university.Managers;
+package com.university.managers;
 
-import com.university.Generators.Evaluation;
+import com.university.generators.Evaluation;
 
 import java.util.Map;
 import java.util.TreeMap;

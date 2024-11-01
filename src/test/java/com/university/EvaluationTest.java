@@ -1,7 +1,7 @@
 
 package com.university;
 
-import com.university.Generators.Evaluation;
+import com.university.generators.Evaluation;
 import org.junit.jupiter.api.Test;
 import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;

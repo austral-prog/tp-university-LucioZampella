@@ -1,6 +1,6 @@
-package com.university.Managers;
+package com.university.managers;
 
-import com.university.Generators.Criteria;
+import com.university.generators.Criteria;
 
 import java.util.TreeMap;
 
