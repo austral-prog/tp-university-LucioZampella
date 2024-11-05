@@ -3,7 +3,7 @@ package com.university.generators;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Evaluation {
+public class Evaluation implements Identifiable {
     private String Subject_Name;
     private String Evaluation_Name;
     private Map<String, Double> studentGrades;
@@ -18,12 +18,9 @@ public class Evaluation {
         this.evaluationType = evaluationType;
     }
 
-    public String Get_Subject_Name() {
-        return Subject_Name;
-    }
-
-    public String Get_Evaluation_Name() {
-        return Evaluation_Name;
+    @Override
+    public String getId() {
+        return Subject_Name + "," + Evaluation_Name;
     }
 
     public void Add_Grade(String exerciseName, double grade) {

@@ -31,7 +31,7 @@ public class EvaluationLogger {
                 evaluationManager.addEvaluation(subjectName, evaluationName, studentName, exerciseName, grade, evaluationType);
             }
 
-            evaluationWriter.writeEvaluationCSV(Output_Evaluation_CSV, evaluationManager.getEvaluations());
+            evaluationWriter.writeCSV(Output_Evaluation_CSV, evaluationManager.getEvaluations());
 
         } catch (IOException e) {
             e.printStackTrace();

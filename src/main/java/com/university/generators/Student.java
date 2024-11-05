@@ -3,7 +3,7 @@ package com.university.generators;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Student {
+public class Student implements Identifiable {
     private String Name;
     private Integer Course_Count;
     private Set<String> Courses = new HashSet<>();
@@ -11,10 +11,10 @@ public class Student {
     public Student(String Name, Integer Course_Count) {
         this.Name = Name;
         this.Course_Count = Course_Count;
-        this.Courses = new HashSet<>();
     }
 
-    public String Get_Name() {
+    @Override
+    public String getId() {
         return Name;
     }
 

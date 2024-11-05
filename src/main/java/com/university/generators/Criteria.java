@@ -1,6 +1,6 @@
 package com.university.generators;
 
-public class Criteria {
+public class Criteria implements Identifiable {
     private String CriteriaType;
     private String CriteriaValue;
     private String CriteriaEvaluation;
@@ -13,11 +13,12 @@ public class Criteria {
         this.CriteriaSubject = CriteriaSubject;
     }
 
-    public String Get_Criteria_Type() {  return CriteriaType; }
+    @Override
+    public String getId() {
+        return CriteriaSubject + "," + CriteriaEvaluation;
+    }
+
+    public String Get_Criteria_Type() { return CriteriaType; }
 
     public String Get_Criteria_Value() { return CriteriaValue; }
-
-    public String Get_Criteria_Name() { return CriteriaEvaluation; }
-
-    public String Get_Criteria_Evaluation() { return CriteriaEvaluation; }
 }

@@ -42,7 +42,7 @@ public class CriteriaLogger {
                 }
             }
 
-            criteriaWriter.writeCriteriaCSV(Output_Criteria_CSV, criteriaManager.getCriteriaMap());
+            criteriaWriter.writeCSV(Output_Criteria_CSV, criteriaManager.getCriteriaMap());
         } catch (IOException e) {
             e.printStackTrace();
         }
