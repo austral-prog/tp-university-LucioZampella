@@ -16,6 +16,6 @@ public class EvaluationWriter extends Writer<Evaluation> {
     @Override
     protected String formatData(Evaluation evaluation) {
         String studentName = evaluation.Get_Grades().keySet().iterator().next();
-        return evaluation.getId() + "," + studentName + "," + String.format(Locale.US, "%.1f", evaluation.calculateFinalGrade());
+        return evaluation.getSubjectName() + "," + evaluation.getEvaluationName() + "," +  studentName + "," + String.format(Locale.US, "%.1f", evaluation.calculateFinalGrade());
     }
 }

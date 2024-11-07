@@ -21,7 +21,7 @@ public class StudentManagerTest {
 
         Student student = students.get("Alice");
         assertNotNull(student);
-        assertEquals("Alice", student.Get_Name());
+        assertEquals("Alice", student.getName());
         assertEquals(1, student.Get_Course_Count());
         assertTrue(student.has_Already_Course("Mathematics"));
     }
@@ -50,8 +50,8 @@ public class StudentManagerTest {
         Evaluation evaluation = evaluations.get(key);
 
         assertNotNull(evaluation);
-        assertEquals("Mathematics", evaluation.Get_Subject_Name());
-        assertEquals("Exam 1", evaluation.Get_Evaluation_Name());
+        assertEquals("Mathematics", evaluation.getSubjectName());
+        assertEquals("Exam 1", evaluation.getEvaluationName());
         assertEquals("Test", evaluation.Get_Evaluation_Type());
         assertEquals(1, evaluation.Get_Grades().size());
         assertEquals(8.0, evaluation.Get_Grades().get("Exercise 1"));

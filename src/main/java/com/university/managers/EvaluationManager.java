@@ -10,7 +10,7 @@ public class EvaluationManager {
 
     public void addEvaluation(String subjectName, String evaluationName, String studentName, String exerciseName, double grade, String evaluationType) {
         String key = subjectName + "-" + evaluationName + "-" + studentName + "-" + evaluationType;
-        Evaluation evaluationInstance = evaluations.getOrDefault(key, new Evaluation(subjectName, evaluationName, exerciseName, evaluationType));
+        Evaluation evaluationInstance = evaluations.getOrDefault(key, new Evaluation(subjectName, evaluationName, studentName, evaluationType));
         evaluations.putIfAbsent(key, evaluationInstance);
         evaluationInstance.Add_Grade(exerciseName, grade);
     }

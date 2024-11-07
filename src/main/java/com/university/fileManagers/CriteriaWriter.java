@@ -14,7 +14,7 @@ public class CriteriaWriter extends Writer<Criteria> {
 
     @Override
     protected String formatData(Criteria criteria) {
-        return criteria.getId() + "," + criteria.Get_Criteria_Type() + "," +
+        return criteria.Get_Criteria_Subject() + "," + criteria.Get_Criteria_Evaluation() + "," +  criteria.Get_Criteria_Type() + "," +
                 criteria.Get_Criteria_Value();
     }
 }

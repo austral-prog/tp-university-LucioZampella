@@ -9,7 +9,7 @@ public class StudentTest {
     @Test
     public void testStudentConstructorAndGetters() {
         Student student = new Student("Ronaldo", 5);
-        assertEquals("Ronaldo", student.Get_Name());
+        assertEquals("Ronaldo", student.getName());
         assertEquals(5, student.Get_Course_Count());
     }
 

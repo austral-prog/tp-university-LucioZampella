@@ -26,7 +26,7 @@ public class EvaluationLogger {
                 String subjectName = entry[1];
                 String evaluationType = entry[2];
                 String evaluationName = entry[3];
-                String exerciseName = entry[4];
+                String exerciseName = entry[0];
                 double grade = Double.parseDouble(entry[5]);
                 evaluationManager.addEvaluation(subjectName, evaluationName, studentName, exerciseName, grade, evaluationType);
             }

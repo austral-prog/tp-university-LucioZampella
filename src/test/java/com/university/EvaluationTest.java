@@ -11,8 +11,8 @@ import static org.junit.jupiter.api.Assertions.*;
         @Test
         public void testEvaluationConstructorAndGetters() {
             Evaluation evaluation = new Evaluation("Mathematics", "Exam 1", "Exercise 1", "Test");
-            assertEquals("Mathematics", evaluation.Get_Subject_Name());
-            assertEquals("Exam 1", evaluation.Get_Evaluation_Name());
+            assertEquals("Mathematics", evaluation.getSubjectName());
+            assertEquals("Exam 1", evaluation.getEvaluationName());
             assertEquals("Exercise 1", evaluation.Get_ExerciseName());
             assertEquals("Test", evaluation.Get_Evaluation_Type());
             assertTrue(evaluation.Get_Grades().isEmpty());

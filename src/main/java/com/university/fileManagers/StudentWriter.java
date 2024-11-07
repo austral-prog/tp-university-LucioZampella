@@ -14,6 +14,6 @@ public class StudentWriter extends Writer<Student> {
 
     @Override
     protected String formatData(Student student) {
-        return student.getId() + "," + student.Get_Course_Count();
+        return student.getName() + "," + student.Get_Course_Count();
     }
 }

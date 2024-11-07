@@ -1,6 +1,6 @@
 package com.university.generators;
 
-import com.university.Entity;
+import com.university.CLI.Entity;
 
 import java.util.HashMap;
 import java.util.Map;
