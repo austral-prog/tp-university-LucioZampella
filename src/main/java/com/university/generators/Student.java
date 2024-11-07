@@ -1,9 +1,11 @@
 package com.university.generators;
 
+import com.university.Entity;
+
 import java.util.HashSet;
 import java.util.Set;
 
-public class Student implements Identifiable {
+public class Student implements Entity {
     private String Name;
     private Integer Course_Count;
     private Set<String> Courses = new HashSet<>();
@@ -14,13 +16,18 @@ public class Student implements Identifiable {
     }
 
     @Override
-    public String getId() {
-        return Name;
+    public int getId() {
+        return 0;
     }
 
-    public Integer Get_Course_Count() {
-        return Course_Count;
+    @Override
+    public void setId(int id) {
+
     }
+
+    public String getName() { return Name;}
+
+    public Integer Get_Course_Count() { return Course_Count; }
 
     public void increment_Course_Count() {
         Course_Count++;

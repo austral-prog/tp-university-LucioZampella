@@ -1,9 +1,11 @@
 package com.university.generators;
 
+import com.university.Entity;
+
 import java.util.HashMap;
 import java.util.Map;
 
-public class Evaluation implements Identifiable {
+public class Evaluation implements Entity {
     private String Subject_Name;
     private String Evaluation_Name;
     private Map<String, Double> studentGrades;
@@ -18,10 +20,9 @@ public class Evaluation implements Identifiable {
         this.evaluationType = evaluationType;
     }
 
-    @Override
-    public String getId() {
-        return Subject_Name + "," + Evaluation_Name;
-    }
+    public String getSubjectName() { return Subject_Name; }
+
+    public String getEvaluationName() { return Evaluation_Name; }
 
     public void Add_Grade(String exerciseName, double grade) {
         studentGrades.put(exerciseName, grade);
@@ -45,5 +46,15 @@ public class Evaluation implements Identifiable {
             sum += grade;
         }
         return sum / studentGrades.size();
+    }
+
+    @Override
+    public int getId() {
+        return 0;
+    }
+
+    @Override
+    public void setId(int id) {
+
     }
 }

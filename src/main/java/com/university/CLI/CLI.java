@@ -1,4 +1,6 @@
-package com.university;
+package com.university.CLI;
+
+import com.university.CRUDRepository;
 
 public interface CLI {
     /**

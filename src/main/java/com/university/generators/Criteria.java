@@ -1,6 +1,8 @@
 package com.university.generators;
 
-public class Criteria implements Identifiable {
+import com.university.Entity;
+
+public class Criteria implements Entity {
     private String CriteriaType;
     private String CriteriaValue;
     private String CriteriaEvaluation;
@@ -13,12 +15,21 @@ public class Criteria implements Identifiable {
         this.CriteriaSubject = CriteriaSubject;
     }
 
-    @Override
-    public String getId() {
-        return CriteriaSubject + "," + CriteriaEvaluation;
-    }
+    public String Get_Criteria_Subject() { return CriteriaSubject; }
+
+    public String Get_Criteria_Evaluation() { return CriteriaEvaluation; }
 
     public String Get_Criteria_Type() { return CriteriaType; }
 
     public String Get_Criteria_Value() { return CriteriaValue; }
+
+    @Override
+    public int getId() {
+        return 0;
+    }
+
+    @Override
+    public void setId(int id) {
+
+    }
 }
