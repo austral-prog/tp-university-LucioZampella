@@ -41,6 +41,7 @@ public class CLIImpl implements CLI {
     }
 
     private void createCLI() {
+
         Scanner scanner = new Scanner(System.in);
         System.out.println("\nWelcome to CLI Creater\n");
         System.out.println("\nWhat do you want to create:\n");
@@ -58,6 +59,7 @@ public class CLIImpl implements CLI {
                 studentRepository.create(new Student(name + " " + lastname, 1));
                 break;
             }
+
             case 2: {
                 System.out.print("Enter subject name:");
                 String subjectName = scanner.nextLine();
@@ -94,6 +96,7 @@ public class CLIImpl implements CLI {
                 }
                 break;
             }
+
             case 3: {
                 System.out.print("Enter criteria subject:");
                 String criteriaSubject = scanner.nextLine();
@@ -107,10 +110,12 @@ public class CLIImpl implements CLI {
                 criteriaRepository.create(new Criteria(criteriaSubject, criteriaEvaluation,
                         criteriaType, criteriaValue ));
             }
+
             default:
                 System.out.println("Invalid input");
         }
     }
+
     private void readCLI() {
         Scanner myScanner = new Scanner(System.in);
         System.out.println("\nWelcome to CLI reader\n");
@@ -125,11 +130,77 @@ public class CLIImpl implements CLI {
                 System.out.print("Enter id:\n");
                 int id = myScanner.nextInt();
                 Student studentRead = studentRepository.read(id);
-                if (studentRead == null){
+                if (studentRead != null){
+                    System.out.println("\nStudent: " + studentRead.getName());
+                } else {
+                    System.out.println("Invalid ID");
+                }
+                break;
+            }
 
+            case 2: {
+                System.out.print("Enter id:\n");
+                int id = myScanner.nextInt();
+                Evaluation evaluationRead = evaluationRepository.read(id);
+                if (evaluationRead != null) {
+                    System.out.println("\nSubject Name: " + evaluationRead.getSubjectName());
+                    System.out.println("\nEvaluation Name: " + evaluationRead.getEvaluationName());
+                    System.out.println("\nExercise Name: " + evaluationRead.Get_ExerciseName());
+                    System.out.println("\nEvaluation Type: " + evaluationRead.Get_Evaluation_Type());
+                } else {
+                    System.out.println("Invalid ID");
                 }
             }
+
+            case 3: {
+                System.out.print("Enter id:\n");
+                int id = myScanner.nextInt();
+                Criteria criteriaRead = criteriaRepository.read(id);
+                if (criteriaRead != null) {
+                    System.out.println("\nCriteria Subject: " + criteriaRead.Get_Criteria_Subject());
+                    System.out.println("\nCriteria Evaluation: " + criteriaRead.Get_Criteria_Evaluation());
+                    System.out.println("\nCriteria Type: " + criteriaRead.Get_Criteria_Type());
+                    System.out.println("\nCriteria Value: " + criteriaRead.Get_Criteria_Value());
+                } else {
+                    System.out.println("Invalid ID");
+                }
+            }
+
+            default:
+                System.out.println("Invalid input, try again");
+            }
         }
+
+        public void updateCLI() {
+
+        Scanner myScanner = new Scanner(System.in);
+        System.out.println("\nWhat do you want to update:\n");
+        System.out.println("1. Update Student");
+        System.out.println("2. Update Evaluation");
+        System.out.println("3. Update Criteria");
+        int choice = myScanner.nextInt();
+
+        switch (choice) {
+
+            case 1: {
+                System.out.print("\nEnter student ID:\n");
+                int id = myScanner.nextInt();
+                System.out.print("\nEnter new student name:\n");
+                String studentName = myScanner.nextLine();
+                String studentLastname = myScanner.nextLine();
+
+                studentRepository.update(id, new Student(studentName + " " + studentLastname, 1));
+                break;
+            }
+            case 2: {
+                System.out.print("\nEnter evaluation ID:\n");
+                int id = myScanner.nextInt();
+                System.out.println(
+                String evaluationName = myScanner.nextLine();
+                System.out.println
+            }
+        }
+
         @Override
         public void runCLI (CRUDRepository < ? >[]crudInterfaces){
 
